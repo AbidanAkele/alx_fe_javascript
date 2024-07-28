@@ -106,18 +106,18 @@ function importFromJsonFile(event) {
    return combinedQuotes;
  }
 
- function fetchQuotesFromServer() {
-   fetch(apiEndpoint)
-   .then(response => response.json())
-   .then(data => {
+ async function fetchQuotesFromServer() {
+   try {
+     const response = await fetch(apiEndpoint);
+     const data = await response.json();
      const serverQuotes = data.map(item => ({ text: item.title, category: "Server" }));
      quotes = mergeQuotes(quotes, serverQuotes);
      saveQuotes();
      notification.textContent = "Quotes have been updated from the server.";
-   })
-   .catch(error => {
+   } catch (error) {
      console.error('Error fetching quotes:', error);
-   });
+     notification.textContent = "Failed to update quotes from the server.";
+   }
  }
 
  setInterval(fetchQuotesFromServer, 60000);
