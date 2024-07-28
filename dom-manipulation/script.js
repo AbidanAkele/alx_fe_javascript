@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const newQuoteButton = document.getElementById("newQuote");
   const categoryFilter = document.getElementById("categoryFilter");
   const lastSelectedCategory = localStorage.getItem('lastSelectedCategory') || 'all';
+  const apiEndpoint = 'https://jsonplaceholder.typicode.com/posts';
 
   function showRandomQuote() {
     const randomIndex = Math.floor(Math.random() * quotes.length);
@@ -94,6 +95,32 @@ function importFromJsonFile(event) {
     });
     localStorage.setItem('lastSelectedCategory', selectedCategory);
  }
+
+ function mergeQuotes(localQuotes, importedQuotes) {
+   const combinedQuotes = [...localQuotes];
+   importedQuotes.forEach(importedQuote => {
+     if (!localQuotes.some(localQuote => localQuote.text === importedQuote.text)) {
+       combinedQuotes.push(importedQuote);
+     }
+   });
+   return combinedQuotes;
+ }
+
+ function fetchQuotesFromServer() {
+   fetch(apiEndpoint)
+   .then(response => response.json())
+   .then(data => {
+     const serverQuotes = data.map(item => ({ text: item.title, category: "Server" }));
+     quotes = mergeQuotes(quotes, serverQuotes);
+     saveQuotes();
+     notification.textContent = "Quotes have been updated from the server.";
+   })
+   .catch(error => {
+     console.error('Error fetching quotes:', error);
+   });
+ }
+
+ setInterval(fetchQuotesFromServer, 60000);
 
  showRandomQuote();
  populateCategories();
