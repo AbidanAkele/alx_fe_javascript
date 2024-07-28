@@ -140,6 +140,13 @@ function importFromJsonFile(event) {
    }
  }
 
+ async function syncQuotes() {
+   await fetchQuotesFromServer();
+   for (let quote of quotes) {
+     await postQuoteToServer(quote);
+   }
+ }
+
  setInterval(fetchQuotesFromServer, 60000);
 
  showRandomQuote();
