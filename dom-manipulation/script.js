@@ -131,12 +131,12 @@ function importFromJsonFile(event) {
        body: JSON.stringify(quote)
      });
      if (response.ok) {
-       console.log('Quote posted successfully:', quote);
+       console.log('Quotes synced with server!', quote);
      } else {
-       console.error('Failed to post quote:', response.statusText);
+       console.error('Failed to post quote: ', response.statusText);
      }
    } catch (error) {
-     console.error('Error posting quote:', error);
+     console.error('Error posting quote: ', error);
    }
  }
 
