@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const newQuoteCategory = document.getElementById("newQuoteCategory").value;
 
     if (newQuoteText && newQuoteCategory) {
-      quotes.push({ text: newQuoteText, category: newQuoteCategory });
+      quotes.appendChild({ text: newQuoteText, category: newQuoteCategory });
       document.getElementById("newQuoteText").value = '';
       document.getElementById("newQuoteCategory").value = '';
       alert("New quote added!");
