@@ -40,6 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("newQuoteCategory").value = '';
 
       alert("New quote added!");
+      postQuoteToServer(newQuote);
     } else {
       alert("Please fill in both fields.");
     }
@@ -117,6 +118,25 @@ function importFromJsonFile(event) {
    } catch (error) {
      console.error('Error fetching quotes:', error);
      notification.textContent = "Failed to update quotes from the server.";
+   }
+ }
+
+ async function postQuoteToServer(quote) {
+   try {
+     const response = await fetch(apiEndpoint, {
+       method: 'POST',
+       headers: {
+         'Content-Type': 'application/json'
+       },
+       body: JSON.stringify(quote)
+     });
+     if (response.ok) {
+       console.log('Quote posted successfully:', quote);
+     } else {
+       console.error('Failed to post quote:', response.statusText);
+     }
+   } catch (error) {
+     console.error('Error posting quote:', error);
    }
  }
 
