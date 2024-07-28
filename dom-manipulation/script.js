@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   newQuoteButton.addEventListener("click", showRandomQuote);
 
-  window.addQuote = function addQuote() {
+  window.addQuote = function createAddQuoteForm() {
     const newQuoteText = document.getElementById("newQuoteText").value;
     const newQuoteCategory = document.getElementById("newQuoteCategory").value;
 
